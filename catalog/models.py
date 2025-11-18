@@ -15,7 +15,9 @@ class Product(models.Model):
         verbose_name="Изображение",
         help_text="Загрузите фото продукта",
     )
-    category = models.ForeignObject(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Категория", related_name="products"
+    )
     cost = models.IntegerField(verbose_name="Цена")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
