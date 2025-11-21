@@ -1,11 +1,14 @@
 from pathlib import Path
 import os
+
+from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = "django-insecure-vmq^9s@c$((#zp#qo!quw)i#kiirwk!y*cm!qvt(k@@r5azdpt"
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 DEBUG = True
@@ -97,13 +100,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = (BASE_DIR / "static/",)
+STATICFILES_DIRS = (BASE_DIR / "static",)
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_URL = "media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
