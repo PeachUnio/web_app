@@ -1,0 +1,60 @@
+[
+  {
+    "fields": {
+      "name": "Техника",
+      "description": "Очень полезная вещь"
+    },
+    "model": "catalog.category",
+    "pk": 1
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields":
+    {
+      "name": "Мебель",
+      "description": "Без нее дом пустой"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields":
+    {
+      "name": "Компьютер",
+      "description": "Проводник в бесконечную сеть",
+      "image": "",
+      "category": 1,
+      "cost": 200000,
+      "created_at": "2025-11-19T16:40:33.593Z",
+      "updated_at": "2025-11-19T16:40:33.593Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields":
+    {
+      "name": "Стол",
+      "description": "Полезен для еды и прочих важных дел.",
+      "image": "",
+      "category": 2,
+      "cost": 3000,
+      "created_at": "2025-11-19T16:41:23.178Z",
+      "updated_at": "2025-11-19T16:41:23.178Z"
+    }
+  },
+  {"model": "catalog.product",
+    "pk": 3,
+    "fields":
+    {
+      "name": "Лампа",
+      "description": "Сияй сияй моя звезда",
+      "image": "",
+      "category": 1,
+      "cost": 2000,
+      "created_at": "2025-11-19T16:41:59.588Z",
+      "updated_at": "2025-11-19T16:41:59.588Z"
+    }
+  }
+]
