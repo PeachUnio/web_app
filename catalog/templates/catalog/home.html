@@ -15,7 +15,9 @@
                   <div class="card-body">
                     <h5 class="card-title text-center fs-3">₽ {{ product.cost }}</h5>
                     <p class="card-text text-left">{{ product.description|truncatechars:100 }}</p>
-                    <button type="button" class="w-100 btn btn-lg btn-outline-primary">Купить</button>
+                      <a href="{% url 'catalog:products_ditail' pk=product.id %}" class="w-100 btn btn-lg btn-outline-primary">
+                          Купить
+                      </a>
                   </div>
                 </div>
             </div>
