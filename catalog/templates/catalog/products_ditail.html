@@ -4,17 +4,17 @@
     <div class="col-1"></div>
     <div class="col-9">
         <div class="mt-5"></div>
-        <h1 class="text-center">{{ object.name }}</h1>
+        <h1 class="text-center">{{ product.name }}</h1>
         <div class="mt-3"></div>
-            <h5 class="text-center text-secondary">{{ object.description }}</h5>
+            <h5 class="text-center text-secondary">{{ product.description }}</h5>
         <div class="mt-9"></div>
         <div class="card mx-auto text-center" style="width: 60rem;">
-              <img src="{{ object.image|media_filter }}" class="card-img-top">
+              <img src="{{ product.image|media_filter }}" class="card-img-top">
               <div class="card-body">
-                  <h5 class="card-title">₽ {{ object.cost }}</h5>
-                  <p class="card-text">{{ object.category }}</p>
-                  <p class="card-text text-end"><small class="text-body-secondary">продукт создан: {{ object.created_at|date:"d M Y" }}</small></p>
-                  <p class="card-text text-end"><small class="text-body-secondary">продукт изменен: {{ object.updated_at|date:"d M Y" }}</small></p>
+                  <h5 class="card-title">₽ {{ product.cost }}</h5>
+                  <p class="card-text">{{ product.category }}</p>
+                  <p class="card-text text-end"><small class="text-body-secondary">продукт создан: {{ product.created_at|date:"d M Y" }}</small></p>
+                  <p class="card-text text-end"><small class="text-body-secondary">продукт изменен: {{ product.updated_at|date:"d M Y" }}</small></p>
               </div>
 
         </div>
