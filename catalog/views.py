@@ -15,5 +15,5 @@ class ContactsView(TemplateView):
 
 class ProductsDitail(DetailView):
     model = Product
-    template_name = 'catalog/products_ditail.html'
-    context_object_name = 'product'
+    template_name = "catalog/products_ditail.html"
+    context_object_name = "product"
