@@ -15,6 +15,12 @@ class PublicationsDitail(DetailView):
     template_name = "publication_ditail.html"
     context_object_name = "publication"
 
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        self.object.save()
+        return self.object
+
 
 class PublicationCreateView(CreateView):
     model = Publication
