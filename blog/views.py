@@ -18,13 +18,13 @@ class PublicationsDitail(DetailView):
 
 class PublicationCreateView(CreateView):
     model = Publication
-    template_name = "blog_create.html"
+    template_name = "blog_form.html"
     fields = "title", "content", "image"
     success_url = reverse_lazy("blog:main_page")
 
 
 class PublicationUpdateView(UpdateView):
     model = Publication
-    template_name = "blog_create.html"
+    template_name = "blog_form.html"
     fields = "title", "content", "image"
     success_url = reverse_lazy("blog:main_page")
