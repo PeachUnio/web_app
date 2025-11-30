@@ -23,10 +23,12 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ publication.title }}</h5>
                         <p class="card-text">{{ publication.content }}</p>
-                        <p class="card-text text-end"><small class="text-body-secondary">9 mins</small></p>
+                        <p class="card-text text-end"><small class="text-body-secondary">{{ publication.views_count }}</small></p>
                         <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-secondary">View</button>
-                            <button type="button" class="btn btn-secondary">Edit</button>
+                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                <a href="{% url 'blog:publications_ditail' pk=publication.id %}" class="btn btn-primary">детали</a>
+                                <a href="#" class="btn btn-secondary">редактировать</a>
+                            </div>
                         </div>
                     </div>
 
