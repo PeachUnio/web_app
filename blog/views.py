@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 
 from blog.models import Publication
 
@@ -17,6 +17,13 @@ class PublicationsDitail(DetailView):
 
 
 class PublicationCreateView(CreateView):
+    model = Publication
+    template_name = "blog_create.html"
+    fields = "title", "content", "image"
+    success_url = reverse_lazy("blog:main_page")
+
+
+class PublicationUpdateView(UpdateView):
     model = Publication
     template_name = "blog_create.html"
     fields = "title", "content", "image"
