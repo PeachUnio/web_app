@@ -27,7 +27,7 @@
                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
                                 <a href="{% url 'blog:publications_ditail' pk=publication.id %}" class="btn btn-primary">детали</a>
-                                <a href="#" class="btn btn-secondary">редактировать</a>
+                                <a href="{% url 'blog:publications_update' publication.id %}" class="btn btn-secondary">редактировать</a>
                             </div>
                         </div>
                     </div>
