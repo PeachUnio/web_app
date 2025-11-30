@@ -17,6 +17,9 @@
             <p>
                 <a href="{% url 'blog:main_page' %}" class="w-100 btn btn-lg btn-outline-primary">назад</a>
             </p>
+            <p>
+                <a href="{% url 'blog:publications_delete' publication.id %}" class="w-100 btn btn-lg btn-outline-danger">удалить</a>
+            </p>
         </div>
     </div>
 {% endblock %}
