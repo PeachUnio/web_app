@@ -1,0 +1,22 @@
+{% extends "basa.html" %}
+{% block content %}
+<div class="mt-5"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">действительно хотите удалить публикацию "{{ publication.title }}"?</h5>
+                        {% csrf_token %}
+                    </div>
+                    <button type="submit" class="btn btn-danger">удалить</button>
+                  <p>
+                    <a href="{% url 'blog:main_page' %}" class="w-100 btn btn-lg btn-outline-primary">отмена</a>
+                  </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
