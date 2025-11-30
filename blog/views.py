@@ -9,6 +9,9 @@ class MainView(ListView):
     model = Publication
     template_name = "main_page.html"
 
+    def get_queryset(self):
+        return Publication.objects.filter(is_published=True)
+
 
 class PublicationsDitail(DetailView):
     model = Publication
