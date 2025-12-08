@@ -1,0 +1,27 @@
+{% extends "catalog/base_pattern.html" %}
+{% block content %}
+    <div class="col-1"></div>
+    <div class="col-9">
+        <div class="mt-5"></div>
+        <h1 class="text-center">Главная</h1>
+        <div class="mt-3"></div>
+        <h5 class="text-center text-secondary">Вы находитесь на сайте, предназначенном для продажи товаров.</h5>
+        <div class="mt-3"></div>
+        <div class="row">
+            {% for product in object_list %}
+            <div class="col-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header text-center fs-5">{{ product.name }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center fs-3">₽ {{ product.cost }}</h5>
+                        <p class="card-text text-left">{{ product.description|truncatechars:100 }}</p>
+                        <a href="{% url 'catalog:products_ditail' pk=product.id %}" class="w-100 btn btn-lg btn-outline-primary">
+                            Купить
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
