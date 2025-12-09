@@ -36,10 +36,10 @@ class ProductUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse("catalog:products_ditail", args=[self.kwargs.get("pk")])
-#
-#
-# class ProductsDeleteView(DeleteView):
-#     model = Product
-#     template_name = "publication_confirm_del.html"
-#     success_url = reverse_lazy("blog:main_page")
-#     context_object_name = "publication"
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = "catalog/product_confirm_del.html"
+    success_url = reverse_lazy("catalog:home")
+    context_object_name = "product"
