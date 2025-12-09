@@ -28,14 +28,14 @@ class ProductsCreateView(CreateView):
     success_url = reverse_lazy("catalog:home")
 
 
-# class ProductsUpdateView(UpdateView):
-#     model = Product
-#     template_name = "product_form.html"
-#     form = ProductForm
-#     success_url = reverse_lazy("blog:main_page")
-#
-#     def get_success_url(self):
-#         return reverse("blog:publications_ditail", args=[self.kwargs.get("pk")])
+class ProductUpdateView(UpdateView):
+    model = Product
+    template_name = "catalog/product_form.html"
+    form_class = ProductForm
+    success_url = reverse_lazy("catalog:home")
+
+    def get_success_url(self):
+        return reverse("catalog:products_ditail", args=[self.kwargs.get("pk")])
 #
 #
 # class ProductsDeleteView(DeleteView):
