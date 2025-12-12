@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm, BooleanField
 from catalog.models import Product
 
@@ -17,3 +18,9 @@ class ProductForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Product
         fields = ("name", "description", "category", "image", "cost")
+
+    def clean_cost(self):
+        cost = self.cleaned_data["cost"]
+        if cost < 0:
+            raise ValidationError("Цена не может быть отрицательной!")
+        return cost
