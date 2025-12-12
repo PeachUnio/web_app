@@ -17,10 +17,28 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Product
-        fields = ("name", "description", "category", "image", "cost")
+        fields = ["name", "description", "category", "image", "cost"]
 
     def clean_cost(self):
-        cost = self.cleaned_data["cost"]
+        cost = self.cleaned_data.get("cost")
+
         if cost < 0:
             raise ValidationError("Цена не может быть отрицательной!")
+
         return cost
+
+    def clean(self):
+        cleaned_data = super().clean()
+        name = cleaned_data.get("name", "")
+        description = cleaned_data.get("description", "")
+        taboo_list = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]
+
+        for world in taboo_list:
+            world = world.lower()
+            if world in name:
+                raise ValidationError("Некорректное слово было использованы в названии продукта!")
+            if world in description:
+                raise ValidationError("Некорректное слово было использованы в описании продукта!")
+            continue
+
+        return cleaned_data
