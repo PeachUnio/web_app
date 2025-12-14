@@ -3,6 +3,11 @@ from django.forms import ModelForm, BooleanField
 from catalog.models import Product
 
 
+
+FORBIDDEN_WORDS = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]
+
+
+
 class StyleFormMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -19,26 +24,33 @@ class ProductForm(StyleFormMixin, ModelForm):
         model = Product
         fields = ["name", "description", "category", "image", "cost"]
 
+
     def clean_cost(self):
         cost = self.cleaned_data.get("cost")
 
-        if cost < 0:
+
+        if cost is not None and cost < 0:
             raise ValidationError("Цена не может быть отрицательной!")
+
 
         return cost
 
-    def clean(self):
-        cleaned_data = super().clean()
-        name = cleaned_data.get("name", "")
-        description = cleaned_data.get("description", "")
-        taboo_list = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]
 
-        for world in taboo_list:
-            world = world.lower()
-            if world in name:
-                raise ValidationError("Некорректное слово было использованы в названии продукта!")
-            if world in description:
-                raise ValidationError("Некорректное слово было использованы в описании продукта!")
-            continue
+    def clean_name(self):
+        name = self.cleaned_data.get("name", "")
+        if name:
+            name_lower = name.lower()
+            for word in FORBIDDEN_WORDS:
+                if word.lower() in name_lower:
+                    raise ValidationError("Некорректное слово было использовано в названии продукта!")
+        return name
 
-        return cleaned_data
+
+    def clean_description(self):
+        description = self.cleaned_data.get("description", "")
+        if description:
+            description_lower = description.lower()
+            for word in FORBIDDEN_WORDS:
+                if word.lower() in description_lower:
+                    raise ValidationError("Некорректное слово было использовано в описании продукта!")
+        return description
