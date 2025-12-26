@@ -5,36 +5,25 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="{% url 'catalog:home' %}" class="nav-link text-white" aria-current="page">
-                        Главная
-                    </a>
+                    <a href="{% url 'catalog:home' %}" class="nav-link text-white" aria-current="page">Главная</a>
                 </li>
                 <li>
-                    <a href="../templates/category.html" class="nav-link text-white">
-                        Категории
-                    </a>
+                    <a href="../templates/category.html" class="nav-link text-white">Категории</a>
                 </li>
                 <li>
-                    <a href="../templates/catalog.html" class="nav-link text-white">
-                        Заказы
-                    </a>
+                    <a href="../templates/catalog.html" class="nav-link text-white">Заказы</a>
                 </li>
                 <li>
-                    <a href="{% url 'catalog:contacts' %}" class="nav-link text-white">
-                    Контакты
-                    </a>
+                    <a href="{% url 'catalog:contacts' %}" class="nav-link text-white">Контакты</a>
                 </li>
             </ul>
             <hr>
             <div class="dropdown">
                 {% if user.is_authenticated %}
-                <a href="{% url 'users:logout' %}" class="nav-link text-white">
-                    Выход
-                </a>
+                <a href="{% url 'users:logout' %}" class="nav-link text-white">Выход</a>
                 {% else %}
-                <a href="{% url 'users:login' %}" class="nav-link text-white">
-                    Вход
-                </a>
+                <a href="{% url 'users:login' %}" class="nav-link text-white">Вход</a>
+                <a href="{% url 'users:register' %}" class="nav-link text-white">Регистрация</a>
                 {% endif %}
             </div>
         </div>
