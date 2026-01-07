@@ -1,0 +1,18 @@
+{% extends "catalog/base_pattern.html" %}
+{% load my_tags %}
+{% block content %}
+    <div class="col-3">
+      <form class="row" method="post" enctype="multipart/form-data">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Вы действительно хотите удалить продукт "{{ product.name }}"?</h5>
+            {% csrf_token %}
+          </div>
+          <button type="submit" class="w-100 btn btn-lg btn-danger">удалить</button>
+          <p>
+            <a href="{% url 'catalog:home' %}" class="w-100 btn btn-lg btn-outline-primary">отмена</a>
+          </p>
+        </div>
+      </form>
+    </div>
+{% endblock %}

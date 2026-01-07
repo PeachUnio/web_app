@@ -15,6 +15,14 @@
                 <p class="card-text">{{ product.category }}</p>
                 <p class="card-text text-end"><small class="text-body-secondary">продукт создан: {{ product.created_at|date:"d M Y" }}</small></p>
                 <p class="card-text text-end"><small class="text-body-secondary">продукт изменен: {{ product.updated_at|date:"d M Y" }}</small></p>
+                <div class="row">
+                    <div class="col-6">
+                        <a href="{% url 'catalog:products_update' product.id %}" class="btn btn-warning">изменить</a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{% url 'catalog:products_delete' product.id %}" class="btn btn-danger">удалить</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
