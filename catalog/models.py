@@ -34,6 +34,7 @@ class Product(models.Model):
         Category, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Категория", related_name="products"
     )
     cost = models.IntegerField(verbose_name="Цена")
+    publish_product = models.BooleanField(default=False, null=True, blank=True, verbose_name="Значение публикации")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
 
