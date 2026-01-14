@@ -22,18 +22,19 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Product
-        fields = ["name", "description", "category", "image", "cost"]
-
+        fields = ["name", "description", "category", "image", "cost", "publish_product"]
 
     def clean_cost(self):
         cost = self.cleaned_data.get("cost")
-
-
         if cost is not None and cost < 0:
             raise ValidationError("Цена не может быть отрицательной!")
-
-
         return cost
+
+
+class ProductModerForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ["publish_product"]
 
 
     def clean_name(self):
