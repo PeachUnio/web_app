@@ -12,6 +12,10 @@ class HomeView(ListView):
     model = Product
     template_name = "catalog/home.html"
 
+    def get_queryset(self):
+        # Возвращаем только опубликованные продукты
+        return Product.objects.filter(publish_product=True).order_by('name', 'category', 'cost')
+
 
 class ContactsView(TemplateView):
     template_name = "catalog/contacts.html"
