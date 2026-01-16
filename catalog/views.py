@@ -64,3 +64,15 @@ class ProductDeleteView(DeleteView):
     template_name = "catalog/product_confirm_del.html"
     success_url = reverse_lazy("catalog:home")
     context_object_name = "product"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        user = request.user
+
+        if user == self.object.owner:
+            return super().dispatch(request, *args, **kwargs)
+
+        if user.has_perm("catalog.can_unpublish_product") and user.has_perm("catalog.delete_product"):
+            return super().dispatch(request, *args, **kwargs)
+
+        raise PermissionDenied
