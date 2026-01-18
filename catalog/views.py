@@ -1,15 +1,20 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from catalog.models import Product
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModerForm
 
 
 class HomeView(ListView):
     model = Product
     template_name = "catalog/home.html"
+
+    def get_queryset(self):
+        # Возвращаем только опубликованные продукты
+        return Product.objects.filter(publish_product=True).order_by('name', 'category', 'cost')
 
 
 class ContactsView(TemplateView):
@@ -28,6 +33,13 @@ class ProductsCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm
     success_url = reverse_lazy("catalog:home")
 
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
+
 
 class ProductUpdateView(UpdateView):
     model = Product
@@ -38,9 +50,29 @@ class ProductUpdateView(UpdateView):
     def get_success_url(self):
         return reverse("catalog:products_ditail", args=[self.kwargs.get("pk")])
 
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm("catalog.can_unpublish_product") and user.has_perm("catalog.delete_product"):
+            return ProductModerForm
+        raise PermissionDenied
+
 
 class ProductDeleteView(DeleteView):
     model = Product
     template_name = "catalog/product_confirm_del.html"
     success_url = reverse_lazy("catalog:home")
     context_object_name = "product"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        user = request.user
+
+        if user == self.object.owner:
+            return super().dispatch(request, *args, **kwargs)
+
+        if user.has_perm("catalog.can_unpublish_product") and user.has_perm("catalog.delete_product"):
+            return super().dispatch(request, *args, **kwargs)
+
+        raise PermissionDenied
