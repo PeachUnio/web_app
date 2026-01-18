@@ -4,9 +4,9 @@ from django.views.generic import ListView, TemplateView, DetailView, CreateView,
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from catalog.models import Product
+from catalog.models import Product, Category
 from catalog.forms import ProductForm, ProductModerForm
-from catalog.services import get_products_from_cache
+from catalog.services import get_products_from_cache, get_products_by_category, get_all_categories_with_counts
 
 
 class HomeView(ListView):
@@ -76,3 +76,38 @@ class ProductDeleteView(DeleteView):
             return super().dispatch(request, *args, **kwargs)
 
         raise PermissionDenied
+
+
+class ProductsByCategoryView(ListView):
+    template_name = 'catalog/products_by_category.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        category_slug = self.kwargs.get('category_slug')
+        return get_products_by_category(category_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_slug = self.kwargs.get('category_slug')
+
+        try:
+            category = Category.objects.get(slug=category_slug)
+            context['category'] = category
+            context['page_title'] = f'Продукты в категории: {category.name}'
+        except Category.DoesNotExist:
+            context['category'] = None
+            context['page_title'] = 'Категория не найдена'
+
+        context['all_categories'] = get_all_categories_with_counts()
+
+        return context
+
+
+class CategoryListView(TemplateView):
+    template_name = 'catalog/category_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = get_all_categories_with_counts()
+        context['page_title'] = 'Категории товаров'
+        return context
