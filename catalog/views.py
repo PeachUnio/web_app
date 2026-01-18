@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from catalog.models import Product
 from catalog.forms import ProductForm, ProductModerForm
+from catalog.services import get_products_from_cache
 
 
 class HomeView(ListView):
@@ -13,8 +14,7 @@ class HomeView(ListView):
     template_name = "catalog/home.html"
 
     def get_queryset(self):
-        # Возвращаем только опубликованные продукты
-        return Product.objects.filter(publish_product=True).order_by('name', 'category', 'cost')
+        return get_products_from_cache()
 
 
 class ContactsView(TemplateView):
