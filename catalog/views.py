@@ -3,9 +3,11 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import models
 
-from catalog.models import Product
+from catalog.models import Product, Category
 from catalog.forms import ProductForm, ProductModerForm
+from catalog.services import get_products_from_cache, get_products_by_category
 
 
 class HomeView(ListView):
@@ -13,8 +15,7 @@ class HomeView(ListView):
     template_name = "catalog/home.html"
 
     def get_queryset(self):
-        # Возвращаем только опубликованные продукты
-        return Product.objects.filter(publish_product=True).order_by('name', 'category', 'cost')
+        return get_products_from_cache()
 
 
 class ContactsView(TemplateView):
@@ -76,3 +77,26 @@ class ProductDeleteView(DeleteView):
             return super().dispatch(request, *args, **kwargs)
 
         raise PermissionDenied
+
+
+class CategoryProductsView(ListView):
+    template_name = "catalog/category_products.html"
+    context_object_name = "products"
+
+    def get_queryset(self):
+        category_id = self.kwargs["category_id"]
+        return get_products_by_category(category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs["category_id"]
+        context["category"] = get_object_or_404(Category, id=category_id)
+        return context
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = "catalog/category_list.html"
+    context_object_name = "categories"
+
+    queryset = Category.objects.all().order_by("name")
